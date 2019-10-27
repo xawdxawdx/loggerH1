@@ -11,4 +11,10 @@ Create a cron with this expression `*/1 * * * * /usr/local/bin/python3 /root/too
 
 ## Nowadays
 
-Now this script just checks `triages`, `duplicates`(+2 rep), `N/A` and `need more info`
+Now this script just checks:
+```diff
+! triages
++ (+2 rep)
+- Non Applicable
+Need more info
+```
