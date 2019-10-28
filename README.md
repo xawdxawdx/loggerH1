@@ -18,3 +18,7 @@ Now this script just checks:
 - Non Applicable
 Need more info
 ```
+UPD: 
+$$$
+Low, Medium and High bounties was added !
+$$$
