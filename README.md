@@ -3,11 +3,13 @@ Python script for logging changes in hacker's reputation on h1. Currently nice w
 
 ## How to use ?
 
-Put your bugbounty program name in json request like this `team(handle:\"mailru\")`
+Execute python3 input.py and enter your program name. For example if https://hackerone.com/mailru -> mailru .
 
-Provide a correct pathes for log files, such as `/var/www/html/mrglog.txt` and json files `/root/tools/loggerH1/mrg.json`
+Provide a correct pathes for log files, such as `/var/www/html/loggerH1/` and directories for json files `/root/tools/loggerH1/programs/`
 
-Create a cron with this expression `*/1 * * * * /usr/local/bin/python3 /root/tools/loggerH1/test.py > /tmp/test.log$`
+Create a cron with this expression `*/1 * * * * /usr/local/bin/python3 /root/tools/loggerH1/logger.py > /tmp/test.log$`
+
+There will be program's log file on /var/www/html/loggerH1/mailru_log.txt
 
 ## Nowadays
 
