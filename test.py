@@ -8,7 +8,6 @@ r = requests.post('https://hackerone.com/graphql?', json = jsonRequest, headers=
 with open('/root/tools/loggerH1/mrg.json', 'r') as f: #here we stores json from h1
    parsed_string = json.load(f)
 
-
 parsed_string2 = json.loads(r.text)
 
 l = open("/var/www/html/mrglog.txt", "a+")
@@ -24,14 +23,26 @@ for node in parsed_string["data"]["query"]["_teamVmULt"]["_participants113VYv"][
             if node2["reputation"] - node["reputation"] == 2: # Correct duplicate
                print(node["node"]["username"] + " got correct duplicate")
                l.write(node["node"]["username"] + " got correct duplicate\n")
+            else:
+              if node2["reputation"] - node["reputation"] == 15: # bounty received
+                print(node["node"]["username"] + " got a little bounty")
+                l.write(node["node"]["username"] + " got a little bounty\n")
+              else:
+                if node2["reputation"] - node["reputation"] == 25: # 1000+ $ received
+                  print(node["node"]["username"] + " got a medium bounty")
+                  l.write(node["node"]["username"] + " got a medium bounty\n")
+                else:
+                  if node2["reputation"] - node["reputation"] == 50: # 1500+ $ received
+                    print(node["node"]["username"] + " got a huge bounty")
+                    l.write(node["node"]["username"] + " got a huge bounty\n")
       else:
-         if node["reputation"] - node2["reputation"] == 5: # Got N/A :()
-            print(node["node"]["username"] + " got N/A")
-            l.write(node["node"]["username"] + " got correct duplicate\n")
-         else:
-            if node["reputation"] - node2["reputation"] == 7: # Need more info :/
-              print("Mail.ru needs more information from " + node["node"]["username"])
-              l.write("Mail.ru needs more information from " + node["node"]["username"] + "\n")
+        if node["reputation"] - node2["reputation"] == 5: # Got N/A :()
+          print(node["node"]["username"] + " got N/A")
+          l.write(node["node"]["username"] + " got correct duplicate\n")
+        else:
+          if node["reputation"] - node2["reputation"] == 7: # Need more info :/
+            print("Mail.ru needs more information from " + node["node"]["username"])
+            l.write("Mail.ru needs more information from " + node["node"]["username"] + "\n")
               
 
 with open('/root/tools/loggerH1/mrg.json', 'w') as json_file: #here we
