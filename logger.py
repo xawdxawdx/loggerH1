@@ -1,4 +1,15 @@
 import json, requests, os.path
+import vk_api
+from vk_api.longpoll import VkLongPoll, VkEventType
+import random
+
+def write_msg(user_id, message): # send message to vk account
+    vk.method('messages.send', {'user_id': user_id, 'message': message, 'random_id': random.randint(0, 2048)})
+
+token = "your_api_token_from_vk"
+
+vk = vk_api.VkApi(token=token)
+
 
 http_proxy  = "http://127.0.0.1:8080"
 https_proxy = "https://127.0.0.1:8080"
@@ -32,34 +43,29 @@ for filename in os.listdir("/root/tools/loggerH1/programs/"):
       for node2 in parsed_string2["data"]["query"]["_teamVmULt"]["_participants113VYv"]["edges"]:
         if node["node"]["username"] == node2["node"]["username"]: # Go throuth users
           if node2["reputation"] > node["reputation"]: # If user got more reputation, than the past
-             if node2["reputation"] - node["reputation"] == 7: # TRIAGED
-                print(node["node"]["username"] + " got triaged")
-                l.write(node["node"]["username"] + " got triaged\n")
-             else:
-                if node2["reputation"] - node["reputation"] == 2: # Correct duplicate
-                   print(node["node"]["username"] + " got correct duplicate")
-                   l.write(node["node"]["username"] + " got correct duplicate\n")
-                else:
-                  if node2["reputation"] - node["reputation"] == 15: # bounty received
-                    print(node["node"]["username"] + " got a little bounty")
-                    l.write(node["node"]["username"] + " got a little bounty\n")
-                  else:
-                    if node2["reputation"] - node["reputation"] == 25: # 1000+ $ received
-                      print(node["node"]["username"] + " got a medium bounty")
-                      l.write(node["node"]["username"] + " got a medium bounty\n")
-                    else:
-                      if node2["reputation"] - node["reputation"] == 50: # 1500+ $ received
-                        print(node["node"]["username"] + " got a huge bounty")
-                        l.write(node["node"]["username"] + " got a huge bounty\n")
-          else:
-            if node["reputation"] - node2["reputation"] == 5: # Got N/A :()
-              print(node["node"]["username"] + " got N/A")
-              l.write(node["node"]["username"] + " got correct duplicate\n")
-            else:
-              if node["reputation"] - node2["reputation"] == 7: # Need more info :/
-                print("Mail.ru needs more information from " + node["node"]["username"])
-                l.write("Mail.ru needs more information from " + node["node"]["username"] + "\n")
+            if node2["reputation"] - node["reputation"] == 7: # TRIAGED
+              write_msg(23533208, node["node"]["username"] + " got triaged on " + filename[:-5])
+              l.write(node["node"]["username"] + " got triaged on " + filename[:-5] +"\n")
+            elif node2["reputation"] - node["reputation"] == 2: # Correct duplicate
+              write_msg(23533208, node["node"]["username"] + " got correct duplicate on " + filename[:-5])
+              l.write(node["node"]["username"] + " got correct duplicate on " + filename[:-5] +"\n")
+            elif node2["reputation"] - node["reputation"] == 15: # bounty received
+              write_msg(23533208, node["node"]["username"] + " got a little bounty on " + filename[:-5])
+              l.write(node["node"]["username"] + " got a little bounty on " + filename[:-5] +"\n")
+            elif node2["reputation"] - node["reputation"] == 25: # 1000+ $ received
+              write_msg(23533208, node["node"]["username"] + " got a medium bounty on " + filename[:-5])
+              l.write(node["node"]["username"] + " got a medium bounty on " + filename[:-5] +"\n")
+            elif node2["reputation"] - node["reputation"] == 50: # 1500+ $ received
+              write_msg(23533208, node["node"]["username"] + " got a huge bounty on " + filename[:-5])
+              l.write(node["node"]["username"] + " got a huge bounty on " + filename[:-5] +"\n")
+          elif node["reputation"] - node2["reputation"] == 5: # Got N/A :()
+            write_msg(23533208,node["node"]["username"] + " got N/A on " + filename[:-5])
+            l.write(node["node"]["username"] + " got correct duplicate on " + filename[:-5] +"\n")
+          elif node["reputation"] - node2["reputation"] == 7: # Need more info :/
+            write_msg(23533208, filename[:-5] + " needs more information from " + node["node"]["username"])
+            l.write(filename[:-5] + " needs more information from " + node["node"]["username"] + "\n")
                   
 
     with open('/root/tools/loggerH1/programs/' + filename, 'w') as json_file: #here we
-       json.dump(parsed_string2, json_file)
+      json.dump(parsed_string2, json_file)
+
